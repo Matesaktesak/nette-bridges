@@ -33,11 +33,7 @@ class NittroExtension extends CompilerExtension {
 
             $service
                 ->addSetup('addProvider', [ 'nittro', new Statement(NittroRuntime::class) ])
-                ->addSetup(
-                    '?->onCompile[] = function ($engine) { ' . NittroMacros::class . '::install($engine->getCompiler(), ?); }', [
-                    '@self',
-                    $config->noconflict,
-                ]);
+                ->addSetup('addExtension', [new \Nittro\Bridges\NittroLatte\NittroExtension]);
         }
     }
 

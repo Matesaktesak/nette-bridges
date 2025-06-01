@@ -15,7 +15,7 @@ class SnippetIdNode extends StatementNode {
     /**
      * @throws CompileException
      */
-    public function create(Tag $tag): self {
+    public static function create(Tag $tag): self {
         $tag->expectArguments();
         $node = $tag->node = new self;
         $node->argumentExpression = $tag->parser->parseUnquotedStringOrExpression();

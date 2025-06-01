@@ -20,7 +20,7 @@ class DynamicNode extends StatementNode {
     /**
      * @throws CompileException
      */
-    public function create(Tag $tag): self {
+    public static function create(Tag $tag): self {
         $tag->expectArguments();
         if(!$tag->isNAttribute() || $tag->prefix && $tag->prefix != Tag::PrefixNone)
             throw new CompileException('Unknown macro ' . $tag->getNotation() . ', did you mean n:' . $tag->name . '?');

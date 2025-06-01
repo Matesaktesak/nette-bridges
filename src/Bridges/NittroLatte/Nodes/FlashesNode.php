@@ -8,7 +8,7 @@ use Latte\Compiler\Tag;
 
 class FlashesNode extends StatementNode {
 
-    public function create(Tag $tag): self {
+    public static function create(Tag $tag): self {
         $node = $tag->node = new self;
         return $node;
     }

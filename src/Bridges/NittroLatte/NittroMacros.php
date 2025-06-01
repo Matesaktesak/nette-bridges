@@ -129,12 +129,11 @@ class NittroMacros extends MacroSet {
             return $writer->write(
                 'echo %escape(%0.raw->getElementPrototype()->id)',
                 $name ? $writer->write(
-                    '(' . ($name[0] === '$' ? 'is_object(%0.word) ? %0.word : ' : '')
-                    . '$this->global->uiControl->getComponent(%0.word))',
+                    '(' . ($name[0] === '$' ? 'is_object(%0.word) ? %0.word : ' : '') . '$this->global->uiControl->getComponent(%0.word))',
                     $name
                 ) : 'end($this->global->formsStack)'
             );
-        } else if (strpos($name, '-') !== false) {
+        } else if (str_contains($name, '-')) {
             $prefix = $writer->write(
                 '$this->global->uiControl->getComponent(%0.word)',
                 $name

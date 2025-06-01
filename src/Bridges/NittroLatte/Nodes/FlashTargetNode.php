@@ -16,7 +16,7 @@ class FlashTargetNode extends StatementNode {
     /**
      * @throws CompileException
      */
-    public function create(Tag $tag): self {
+    public static function create(Tag $tag): self {
         $node = $tag->node = new self;
         if($tag->prefix && $tag->prefix !== Tag::PrefixNone) throw new CompileException("Unknown macro {$tag->getNotation()}, did you mean n:{$tag->name}?");
         if($tag->htmlElement->getAttribute("id") !== null) throw new CompileException("Cannot combine HTML attribute id with {$tag->getNotation()}");
