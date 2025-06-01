@@ -46,7 +46,7 @@ class DynamicNode extends StatementNode {
     public function print(PrintContext $context): string {
         return $context->format(
             <<< PHP
-                echo ' data-dynamic-mask="', LR\Filters::escapeHtmlAttribute($this->global->snippetDriver->getHtmlId(%node)), '"' %line
+                echo ' data-dynamic-mask="', LR\Filters::escapeHtmlAttr(\$this->global->snippetDriver->getHtmlId(%node)), '"' %line;
             PHP,
             $this->argumentExpression,
             $this->position

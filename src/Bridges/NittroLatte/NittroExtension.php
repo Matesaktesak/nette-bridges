@@ -24,7 +24,9 @@ class NittroExtension extends Extension {
             'flashes.target' => FlashTargetNode::create(...),
             'dynamic' => DynamicNode::create(...),
             'errors' => ErrorsNode::create(...),
+            'n:errors' => ErrorsNode::create(...),
             'errors.form' => ErrorsNode::create(...),
+            'n:errors.form' => ErrorsNode::create(...),
             'dialog' => DialogNode::create(...),
             'dialog.form' => DialogNode::create(...),
             'dialog.iframe' => DialogNode::create(...)

@@ -24,7 +24,7 @@ class ParamNode extends StatementNode {
     public function print(PrintContext $context): string {
         return $context->format(
             <<< PHP
-                echo %escape($this->global->uiControl->getParameterId(%node)) %line
+                echo %escape(\$this->global->uiControl->getParameterId(%node)) %line;
             PHP,
             $this->argumentExpression,
             $this->position

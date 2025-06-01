@@ -31,7 +31,7 @@ class FlashTargetNode extends StatementNode {
         if($this->isNAttribute){
             return $context->format(
                 <<< PHP
-                    echo ' id="', LR\Filters::escapeHtmlAttribute($this->global->uiControl->getParameterId('flashes')), '"' %line
+                    echo ' id="', LR\Filters::escapeHtmlAttr(\$this->global->uiControl->getParameterId('flashes')), '"' %line;
                 PHP . ($this->placementExpression ? <<< PHP
                     echo ' data-flash-placement="', %node, '"'
                 PHP : ''),

@@ -25,7 +25,7 @@ class SnippetIdNode extends StatementNode {
     public function print(PrintContext $context): string {
         return $context->format(
             <<< PHP
-                echo %escape($this->global->snippetDriver->getHtmlId(%node)) %line
+                echo LR\Filters::escapeHtmlAttr(\$this->global->snippetDriver->getHtmlId(%node)) %line;
             PHP,
             $this->argumentExpression,
             $this->position

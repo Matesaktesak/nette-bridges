@@ -2,14 +2,19 @@
 
 namespace Nittro\Bridges\NittroLatte\Nodes;
 
+use Latte\Compiler\Nodes\AreaNode;
 use Latte\Compiler\Nodes\StatementNode;
 use Latte\Compiler\PrintContext;
 use Latte\Compiler\Tag;
 
 class DialogNode extends StatementNode {
 
-    public static function create(Tag $tag): self {
+
+    public static function create(Tag $tag): \Generator {
         $node = $tag->node = new self;
+
+        [$areaNode, $endNode] = yield;
+
         return $node;
     }
 

@@ -37,7 +37,7 @@ class InputIdNode extends StatementNode {
             // When no argument is specified
             if($this->controlNameExpression === null) return $context->format(
                 <<< PHP
-                    echo %escape(end($this->global->formsStack)->getElementPrototype()->id) %line
+                    echo %escape(end(\$this->global->formsStack)->getElementPrototype()->id) %line;
                 PHP,
                 $this->position
             );
@@ -47,7 +47,7 @@ class InputIdNode extends StatementNode {
                 // The argument is a string
                 return $context->format(
                     <<< PHP
-                        echo %escape($this->global->uiControl->getComponent(%dump)->getElementPrototype()->id) %line
+                        echo %escape(\$this->global->uiControl->getComponent(%dump)->getElementPrototype()->id) %line;
                     PHP,
                     $this->controlNameExpression,
                     $this->position,
@@ -56,7 +56,7 @@ class InputIdNode extends StatementNode {
             // The argument is some expression
             return $context->format(
                 <<< PHP
-                    echo %escape((%node)->getElementPrototype()->id) %line
+                    echo %escape((%node)->getElementPrototype()->id) %line;
                 PHP,
                 $this->controlNameExpression,
                 $this->position,
@@ -66,15 +66,15 @@ class InputIdNode extends StatementNode {
             $prefixVar = '$__prefix_'.$context->generateId();
             return $context->format(
                 <<< PHP
-                    %2.raw = str_contains(%0.dump, '-'))
-                        ? $this->global->uiControl->getComponent(%0.node)
+                    %2.raw = str_contains(%0.dump, '-')) %1.line
+                        ? \$this->global->uiControl->getComponent(%0.node)
                         : ( is_object(%0.node)
                             ? %0.node
-                            : end($this->global->formsStack)[%0.dump]
+                            : end(\$this->global->formsStack)[%0.dump]
                         );
                     if(%3.node){
                         echo %escape(%2.raw->getControlPart(%3.node)->getAttribute('id'))
-                    } else echo %escape(%2.raw->getHtmlId())
+                    } else echo %escape(%2.raw->getHtmlId());
                 PHP,
                 $this->controlNameExpression,
                 $this->position,
