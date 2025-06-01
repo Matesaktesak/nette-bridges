@@ -2,6 +2,8 @@ Nittro Nette bridges
 ====================
 
 This repository contains code that you may find useful when you're developing a Nette/Nittro app.
+### v3.0-dev
+Unstable and untested port to `nette/application` `>=3.2` and `latte` v3 
 
 ### v2.0 x v2.1-dev
 

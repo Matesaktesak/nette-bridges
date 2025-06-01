@@ -11,7 +11,7 @@ use Nette\StaticClass;
 class Helpers {
     use StaticClass;
 
-    public static function formatDialogId(string $name, ?Component $component = null) : string {
+    public static function formatDialogId(string $name, ?Component $component = null): string {
         return $name[0] !== '@'
             ? 'dlg-' . ($component ? $component->getUniqueId() : '') . '-' . $name
             : substr($name, 1);

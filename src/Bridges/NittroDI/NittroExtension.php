@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Nittro\Bridges\NittroDI;
 
 use Nette\Bridges\ApplicationLatte\ILatteFactory;
+use Nette\Bridges\ApplicationLatte\LatteFactory;
 use Nette\DI\CompilerExtension;
 use Nette\DI\Definitions\FactoryDefinition;
 use Nette\DI\Definitions\Statement;
@@ -26,7 +27,7 @@ class NittroExtension extends CompilerExtension {
         $builder = $this->getContainerBuilder();
         $config = $this->getConfig();
 
-        if ($latte = $builder->getByType(ILatteFactory::class)) {
+        if ($latte = $builder->getByType(LatteFactory::class)) {
             $definition = $builder->getDefinition($latte);
             $service = $definition instanceof FactoryDefinition ? $definition->getResultDefinition() : $definition;
 

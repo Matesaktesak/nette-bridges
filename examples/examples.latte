@@ -8,7 +8,7 @@
 
         <!-- Dynamic snippets -->
         <!-- The n:dynamic macro is essentially the same as writing the following: -->
-        <!-- <section n:snippet="articles" class="snippet-container" data-dynamic-mask="{snippetId article-\d+}"> -->
+        <!-- <section n:snippet="articles" class="snippet-container" data-dynamic-mask="{snippet.id "article-\d+"}"> -->
         <section n:snippet="articles" n:dynamic="article-\d+">
             {foreach $items as $item}
                 <article n:snippet="article-$item->id">{$item->title}</article>
@@ -21,7 +21,7 @@
         <!-- will have LI child elements, other tags will have P child elements. -->
         <!-- The { } variant renders an UL with LI child elements. -->
         <form>
-            <ul n:formErrors class="errors"></ul>
+            <ul n:errors.form class="errors"></ul>
             <table>
                 <tr>
                     <td>

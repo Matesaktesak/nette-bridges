@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace Nittro\Bridges\NittroUI;
+
 use Nette\Application\UI;
 
 
@@ -10,20 +11,18 @@ abstract class Presenter extends UI\Presenter {
     use PresenterUtils;
 
 
-    protected function startup()
-    {
+    protected function startup() {
         parent::startup();
 
         // Only redraw default snippets if nobody is receiving a signal
-        $this->setRedrawDefault($this->getSignal() === NULL);
+        $this->setRedrawDefault($this->getSignal() === null);
     }
 
 
-    protected function afterRender()
-    {
+    protected function afterRender(): void {
         parent::afterRender();
 
-        if ($this->isAjax()) {
+        if($this->isAjax()) {
             // Redraw default snippets if enabled
             $this->redrawDefault();
         } else {
@@ -31,8 +30,7 @@ abstract class Presenter extends UI\Presenter {
         }
     }
 
-    public function sendPayload() : void
-    {
+    public function sendPayload(): void {
         // Send flash messages in payload
         $this->payload->flashes = $this->exportFlashSession();
 

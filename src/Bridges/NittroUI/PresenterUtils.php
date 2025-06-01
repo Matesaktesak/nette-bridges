@@ -21,18 +21,18 @@ trait PresenterUtils {
     ];
 
 
-    abstract public function getPresenter() : Presenter;
+    abstract public function getPresenter(): Presenter;
 
-    abstract public function isAjax() : bool;
+    abstract public function isAjax(): bool;
 
-    abstract public function isControlInvalid(string $snippet = NULL) : bool;
+    abstract public function isControlInvalid(?string $snippet = null): bool;
 
     /**
      * @param string $snippet
      * @param bool $redraw
      * @return void
      */
-    abstract public function redrawControl(?string $snippet = NULL, bool $redraw = TRUE) : void;
+    abstract public function redrawControl(?string $snippet = null, bool $redraw = true): void;
 
 
     /**
@@ -40,45 +40,40 @@ trait PresenterUtils {
      * @param array $args
      * @return string
      */
-    abstract public function link(string $destination, $args = []) : string;
+    abstract public function link(string $destination, $args = []): string;
 
     /**
      * @param string $destination
      * @param array $args
      * @return void
      */
-    abstract public function redirect(string $destination, $args = []) : void;
+    abstract public function redirect(string $destination, $args = []): void;
 
 
-    abstract public function hasFlashSession() : bool;
+    abstract public function hasFlashSession(): bool;
 
-    abstract public function getFlashSession() : SessionSection;
-
+    abstract public function getFlashSession(): SessionSection;
 
 
     /************* Snippets *************/
 
-    public function setRedrawDefault(bool $value = true) : self
-    {
+    public function setRedrawDefault(bool $value = true): self {
         $this->redrawDefault = $value;
         return $this;
     }
 
-    public function willRedrawDefault() : bool
-    {
+    public function willRedrawDefault(): bool {
         return $this->redrawDefault;
     }
 
-    public function setDefaultSnippets(array $snippets) : self
-    {
+    public function setDefaultSnippets(array $snippets): self {
         $this->defaultSnippets = $snippets;
         return $this;
     }
 
-    public function redrawDefault(bool $force = false) : self
-    {
-        if ($force || $this->redrawDefault && !$this->isControlInvalid()) {
-            foreach ($this->defaultSnippets as $snippet) {
+    public function redrawDefault(bool $force = false): self {
+        if($force || $this->redrawDefault && !$this->isControlInvalid()) {
+            foreach($this->defaultSnippets as $snippet) {
                 $this->redrawControl($snippet);
             }
         }
@@ -89,8 +84,7 @@ trait PresenterUtils {
 
     /************* Flash messages *************/
 
-    public function exportFlashSession() : array
-    {
+    public function exportFlashSession(): array {
         return $this->hasFlashSession()
             ? iterator_to_array($this->getFlashSession()->getIterator())
             : [];

@@ -18,13 +18,8 @@ class NittroMacros extends MacroSet {
         $me = new static($compiler);
         $prefix = $noconflict ? 'ntr.' : '';
 
-        $me->addMacro($prefix . 'snippetId', NittroRuntime::class . '::deprecated(\'{snippetId}\', \'snippet.id\'); echo %escape($this->global->snippetDriver->getHtmlId(%node.word))');
-        $me->addMacro($prefix . 'snippet.id', 'echo %escape($this->global->snippetDriver->getHtmlId(%node.word))');
-        $me->addMacro($prefix . 'param', 'echo %escape($this->global->uiControl->getParameterId(%node.word))');
+
         $me->addMacro($prefix . 'flashes', [$me, 'validateMacro'], [$me, 'macroFlashes'], null, self::AUTO_EMPTY);
-        $me->addMacro($prefix . 'flashes.target', null, null, [$me, 'macroFlashTarget']);
-        $me->addMacro($prefix . 'flashTarget', null, null, [$me, 'macroFlashTarget']);
-        $me->addMacro($prefix . 'dynamic', null, null, [$me, 'macroDynamic']);
         $me->addMacro($prefix . 'errors', [$me, 'validateMacro'], [$me, 'macroErrors'], null, self::AUTO_EMPTY);
         $me->addMacro($prefix . 'errors.form', [$me, 'validateMacro'], [$me, 'macroErrors'], null, self::AUTO_EMPTY);
         $me->addMacro($prefix . 'formErrors', [$me, 'validateMacro'], [$me, 'macroErrors'], null, self::AUTO_EMPTY);
@@ -70,47 +65,6 @@ class NittroMacros extends MacroSet {
             $prefix .= '; echo $_tmp';
             return $writer->write($prefix, $tagName, $childName, $classes);
         }
-    }
-
-    public function macroFlashTarget(MacroNode $node, PhpWriter $writer) : void
-    {
-        if ($node->modifiers) {
-            throw new CompileException('Modifiers are not allowed in ' . $node->getNotation());
-        } else if ($node->prefix !== MacroNode::PREFIX_NONE) {
-            throw new CompileException('Unknown macro ' . $node->getNotation() . ', did you mean n:' . $node->name . '?');
-        } else if (!empty($node->htmlNode->attrs['id'])) {
-            throw new CompileException('Cannot combine HTML attribute id with ' . $node->getNotation());
-        } else if ($node->getNotation() === 'flashTarget') {
-            NittroRuntime::deprecated($node->getNotation(), 'flashes.target');
-        }
-
-        $attrCode = 'echo \' id="\' . htmlSpecialChars($this->global->uiControl->getParameterId(\'flashes\')) . \'"\'';
-
-        if ($node->tokenizer->isNext()) {
-            $attrCode .= '; echo \' data-flash-placement="\' . %node.word . \'"\'';
-        }
-
-        $node->attrCode = $writer->write("<?php $attrCode ?>");
-    }
-
-
-    public function macroDynamic(MacroNode $node, PhpWriter $writer) : void
-    {
-        if (!$node->prefix || $node->prefix !== MacroNode::PREFIX_NONE) {
-            throw new CompileException('Unknown macro ' . $node->getNotation() . ', did you mean n:' . $node->name . '?');
-        }
-
-        $attrCode = 'echo \' data-dynamic-mask="\' . htmlSpecialChars($this->global->snippetDriver->getHtmlId(%node.word)) . \'"\'';
-
-        if (!empty($node->htmlNode->attrs['class'])) {
-            if (!preg_match('/(?:^|\s)nittro-snippet-container(?:\s|$)/', $node->htmlNode->attrs['class'])) {
-                throw new CompileException('Dynamic container specifying the "class" attribute must include the "nittro-snippet-container" class');
-            }
-        } else {
-            $attrCode .= ' . \' class="nittro-snippet-container"\'';
-        }
-
-        $node->attrCode = $writer->write("<?php $attrCode ?>");
     }
 
     public function macroErrors(MacroNode $node, PhpWriter $writer) : ?string
@@ -168,10 +122,6 @@ class NittroMacros extends MacroSet {
 
     public function macroInputId(MacroNode $node, PhpWriter $writer) : string
     {
-        if ($node->getNotation() === 'inputId') {
-            NittroRuntime::deprecated($node->getNotation(), 'input.id');
-        }
-
         $words = $node->tokenizer->fetchWords();
         $name = array_shift($words);
 
